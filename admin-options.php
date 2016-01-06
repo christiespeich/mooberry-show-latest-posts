@@ -29,6 +29,8 @@
 		add_settings_field('mbdslp_number', __('Number of Posts to Display', 'mooberry-show-latest-posts'), 'mbdslp_options_number', 'mbdslp_options', 'mbdslp_options_main');
 		add_settings_field('mbdslp_display', __('Display the Posts', 'mooberry-show-latest-posts'), 'mbdslp_options_display', 'mbdslp_options', 'mbdslp_options_main');
 		add_settings_field('mbdslp_readmore', __('"Read More" Link Text', 'mooberry-show-latest-posts'), 'mbdslp_options_readmore', 'mbdslp_options', 'mbdslp_options_main');
+		//v1.3 added number of words
+		add_settings_field('mbdslp_words', __('Number of words in Excerpt', 'mooberry-show-latest-posts'), 'mbdslp_options_words', 'mbdslp_options', 'mbdslp_options_main');
 	}
 	
 	function mbdslp_main_settings_display() {
@@ -76,6 +78,12 @@
 		echo "<input id='mbdslp_number' name='mbdslp_options[mbdslp_number]' size='3' type='number' value='" . esc_attr($mbdslp_options['mbdslp_number']) . "' />";
 	}
 	
+	// v1.3 Added number of words
+	function mbdslp_options_words() {
+		global $mbdslp_options;
+		echo "<input id='mbdslp_words' name='mbdslp_options[mbdslp_words]' size='3' type='number' value='" . esc_attr($mbdslp_options['mbdslp_words']) . "' />";
+	}
+	
 	function mbdslp_options_display() {
 		global $mbdslp_options;
 		?>
@@ -101,6 +109,9 @@
 		$options['mbdslp_number'] = $input['mbdslp_number'];
 		$options['mbdslp_display'] = $input['mbdslp_display'];
 		$options['mbdslp_readmore'] = $input['mbdslp_readmore'];
+		//v1.3 added words
+		$options['mbdslp_words'] = $input['mbdslp_words'];
+		
 		$options = mbdslp_options_set_defaults( $options );
 		return $options;
 	}
@@ -132,6 +143,12 @@
 		if (!array_key_exists('mbdslp_readmore', $options) || trim($options['mbdslp_readmore']) == '' ) {
 			$options['mbdslp_readmore'] = __('READ MORE', 'mooberry-show-latest-posts');
 		}
+		
+		// v1.3 added words option
+		if (!array_key_exists('mbdslp_words', $options) || trim($options['mbdslp_words']) == '' || !preg_match('/^[0-9]+$/', $options['mbdslp_words'])) {
+			$options['mbdslp_words'] = 55;
+		}
+		
 		return $options;
 	}
 	

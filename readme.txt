@@ -4,7 +4,7 @@ Author URI: http://www.mooberrydreams.com/
 Tags: archive, most recent posts, static front page, latest posts, front page, post, posts
 Requires at least: 3.3.0
 Tested up to: 4.4
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,9 @@ CSS can be used to adjust styling. The following IDs and classes are used:
 3. The posts displayed vertically.
 
 == Changelog ==
+
+= 1.3 =
+* Added number of words option
 
 = 1.2 =
 * Added ability to filter by category

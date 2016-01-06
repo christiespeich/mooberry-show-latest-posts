@@ -4,7 +4,7 @@
     Plugin URI: https://wordpress.org/plugins/mooberry-show-latest-posts/
     Description: Show latest blog posts on the static front page
     Author: Mooberry Dreams
-    Version: 1.2
+    Version: 1.3
     Author URI: http://www.mooberrydreams.com/
 	Text Domain: mooberry-show-latest-posts
 	Domain Path: /languages/
@@ -59,6 +59,13 @@
 					$args['category'] = $options['mbdslp_category'];
 				}
 				
+				//v1.3 added number of words
+				if (array_key_exists('mbdslp_words', $options) && intval($options['mbdslp_words']) > 0) {
+					$num_words = $options['mbdslp_words'];
+				} else {
+					$num_words = 55;
+				}
+				
 				$lastposts = get_posts( $args );
 				if (count($lastposts)==0) {
 					wp_reset_postdata();
@@ -92,7 +99,10 @@
 					
 					// v1.2 used post object instead
 					//$content .=   wp_trim_words( esc_attr(strip_shortcodes(strip_tags( stripslashes( get_the_content())))), $num_words = 55, $more = NULL ) ;
-					$content .=   wp_trim_words( esc_attr(strip_shortcodes(strip_tags( stripslashes( $post->post_content )))), $num_words = 55, $more = NULL ) ;
+					
+					// v1.3 added number of words
+					$cleaned_content = esc_attr(strip_shortcodes(strip_tags( stripslashes( $post->post_content ))));
+					$content .=   wp_trim_words( $cleaned_content, $num_words ) ;
 					
 					// v1.2 used post object instead
 					//$content .= ' <A class="mbslp_read_more" HREF="' . get_the_permalink() . '">' . esc_html($options['mbdslp_readmore']) . '</a></span>';
